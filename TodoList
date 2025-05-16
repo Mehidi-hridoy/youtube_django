@@ -1,0 +1,23 @@
+Todolist - CRM App
+
+1. DONE Create virtual environment, install Django, and create project
+2. Set up base templates and static files
+        - DONE App Pages
+        -DONE Create Page Template
+        -DONE Create Front Page 
+        -DONE Create About page
+3. Add user authentication (login, register, logout)
+        -DONE Create Database Prolife
+        -DONE Make it Possibl to Log in and Log Out
+        -DONE Make it Possible to sign up
+4. Create a simple dashboard view after login
+        - DONE Dashboard
+5. Implement "Create New Leads" functionality
+        
+6. Add ability to change and delete leads
+7. Add feature to convert leads to clients
+8. Add ability to change and delete clients
+9. Implement solution for team collaboration (assign leads/clients to users or teams)
+10. Integrate a payment solution (monthly recurring payments)
+11. Prepare app for production (security, static files, settings)
+12. Deploy the app (e.g., on Heroku, Render, or Railway)
