@@ -4,6 +4,7 @@ from .forms import AddLeadForm
 from .models import Lead
 from django.contrib import messages
 from client.models import Client
+from teams.models import Team
 
 @login_required
 def leads_list(request):
@@ -26,8 +27,11 @@ def add_lead(request):
     if request.method == 'POST':
         form = AddLeadForm(request.POST)
         if form.is_valid():
+            
+            team=Team.objects.filter(created_by=request.user)[0]
             lead = form.save(commit=False)
             lead.created_by = request.user
+            lead.team=team
             lead.save()
             messages.success(request, 'The lead has created successfully.')
             return redirect('dashboard')
@@ -72,6 +76,7 @@ def edit_leads(request, pk):
 @login_required
 def convert_to_client(request, pk):
     lead = get_object_or_404(Lead, created_by=request.user, pk=pk)  # Capital "L" in Lead
+    team=Team.objects.filter(created_by=request.user)[0]
 
     # Create a new client using lead's data
     client = Client.objects.create(
@@ -79,6 +84,7 @@ def convert_to_client(request, pk):
         email=lead.email,
         description=lead.description,  # Typo fixed: 'descripton' -> 'description'
         created_by=request.user,
+        team=team,
     )
     
 

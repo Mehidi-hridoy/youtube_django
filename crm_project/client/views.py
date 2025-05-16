@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Client
 from django.contrib import messages
 from .forms import AddClientForm
-
+from teams.models import Team
 @login_required
 def client_list(request):
     clients=Client.objects.filter(created_by=request.user)
@@ -24,9 +24,11 @@ def add_client(request):
     if request.method == 'POST':
         form = AddClientForm(request.POST)
         if form.is_valid():
-            lead = form.save(commit=False)
-            lead.created_by = request.user
-            lead.save()
+            team=Team.objects.filter(created_by=request.user)[0]
+            client = form.save(commit=False)
+            client.created_by = request.user
+            client.team=Team    
+            client.save()
             messages.success(request, 'The client has created successfully.')
             return redirect('dashboard')
     else:

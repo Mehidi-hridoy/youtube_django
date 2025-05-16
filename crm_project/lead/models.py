@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from teams.models import Team
 class Lead(models.Model):
     LOW= 'low'
     MEDIUM='medium'
@@ -24,6 +24,7 @@ class Lead(models.Model):
         
     )
     name=models.CharField(max_length=50)
+    team=models.ForeignKey(Team, related_name='leads', on_delete=models.CASCADE)
     email=models.EmailField()
     description=models.TextField(blank=True, null=True)
     priority=models.CharField(max_length=12, choices=CHOICES_PRIORITY, default=LOW)
@@ -32,6 +33,8 @@ class Lead(models.Model):
     created_by=models.ForeignKey(User, related_name='leads', on_delete=models.CASCADE)
     created_at=models.DateTimeField(auto_now_add=True)
     modified_at=models.DateTimeField(auto_now=True)
+    class Meta:
+        ordering = ('name',)  # ✅ tuple
 
 
     def __str__ (self):

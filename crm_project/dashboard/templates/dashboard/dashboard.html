@@ -1,11 +1,33 @@
 {% extends 'crm/base.html' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}
+    Dashboard
+{% endblock %}
 
 {% block content %}
-<h1>
-    Dashboard
-</h1>
-    
+    <h1>Dashboard</h1>
+
+    {% if lead %}
+        <table border="1" cellpadding="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Details</th>
+                    <!-- Add more columns here as needed -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in lead %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td><a href="{% url 'lead_details' item.pk %}">Read More</a></td>
+                        <!-- Add more fields here as needed -->
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No leads found.</p>
+    {% endif %}
 
 {% endblock %}
